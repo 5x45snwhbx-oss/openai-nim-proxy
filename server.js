@@ -27,7 +27,7 @@ const MODEL_MAPPING = {
   'gpt-4-turbo': 'moonshotai/kimi-k2-instruct-0905',
   'gpt-4o': 'minimaxai/minimax-m2.7',
   'kimi-k2-5': 'moonshotai/kimi-k2.5',
-  'kimi-k2-6': 'moonshotai/kimi-k2.6',
+  'kimi-k2-6': 'moonshotai/kimi-k2.6.',
   'claude-3-sonnet': 'openai/gpt-oss-20b',
   'gemini-pro': 'qwen/qwen3-next-80b-a3b-thinking' 
 };
