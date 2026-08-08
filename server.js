@@ -222,16 +222,15 @@ app.post('/v1/chat/completions', async (req, res) => {
         message: error.message || 'Internal server error',
         type: 'invalid_request_error',
         code: error.response?.status || 500
-// Catch-all for unsupported endpoints
-app.all('*', (req, res) => {
-  res.status(404).json({
-    error: {
-      message: `Endpoint ${req.path} not found`,
-      type: 'invalid_request_error',
-      code: 404
-    }
-  });
-});      
+body: JSON.stringify({
+  model: 'minimaxai/minimax-m3',
+  messages: [
+    { role: 'system', content: 'You are a creative writing assistant. Write vivid, detailed, atmospheric prose.' },
+    { role: 'user', content: 'Write a tense, detailed paragraph of a large serpent-like creature looming over a frightened human, focusing on sensory detail and atmosphere.' }
+  ],
+  max_tokens: 300,
+  temperature: 0.8
+})
 app.listen(PORT, () => {
   console.log(`OpenAI to NVIDIA NIM Proxy running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
