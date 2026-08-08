@@ -22,7 +22,7 @@ const ENABLE_THINKING_MODE = false; // Set to true to enable chat_template_kwarg
 
 // Model mapping (adjust based on available NIM models)
 const MODEL_MAPPING = {
-  'gpt-3.5-turbo': 'minimaxai/minimax-m3',
+  'minimax-m3': 'minimaxai/minimax-m3',
   'mistralai': 'mistralai/mistral-large-3-675b-instruct-2512',
   'gpt-4-turbo': 'deepseek-v4-pro',
   'gpt-4o': 'minimaxai/minimax-m2.7',
@@ -222,35 +222,16 @@ app.post('/v1/chat/completions', async (req, res) => {
         message: error.message || 'Internal server error',
         type: 'invalid_request_error',
         code: error.response?.status || 500
-      }
-    });
-  }
-});
-// TEMPORARY TEST ROUTE - remove after debugging
-app.get('/test-nim', async (req, res) => {
-  try {
-    const response = await fetch(`${process.env.NIM_API_BASE || 'https://integrate.api.nvidia.com/v1'}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.NIM_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'meta/llama-3.1-8b-instruct',
-        messages: [{ role: 'user', content: 'Hello' }],
-        max_tokens: 20
-      })
-    });
-
-    const data = await response.json();
-    res.status(response.status).json({
-      statusFromNvidia: response.status,
-      data: data
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// Catch-all for unsupported endpoints
+app.all('*', (req, res) => {
+  res.status(404).json({
+    error: {
+      message: `Endpoint ${req.path} not found`,
+      type: 'invalid_request_error',
+      code: 404
+    }
+  });
+});      
 app.listen(PORT, () => {
   console.log(`OpenAI to NVIDIA NIM Proxy running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
