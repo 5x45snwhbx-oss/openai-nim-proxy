@@ -226,17 +226,6 @@ app.post('/v1/chat/completions', async (req, res) => {
     });
   }
 });
-
-// Catch-all for unsupported endpoints
-app.all('*', (req, res) => {
-  res.status(404).json({
-    error: {
-      message: `Endpoint ${req.path} not found`,
-      type: 'invalid_request_error',
-      code: 404
-    }
-  });
-});
 // TEMPORARY TEST ROUTE - remove after debugging
 app.get('/test-nim', async (req, res) => {
   try {
