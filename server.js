@@ -237,7 +237,31 @@ app.all('*', (req, res) => {
     }
   });
 });
+// TEMPORARY TEST ROUTE - remove after debugging
+app.get('/test-nim', async (req, res) => {
+  try {
+    const response = await fetch(`${process.env.NIM_API_BASE || 'https://integrate.api.nvidia.com/v1'}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.NIM_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'meta/llama-3.1-8b-instruct',
+        messages: [{ role: 'user', content: 'Hello' }],
+        max_tokens: 20
+      })
+    });
 
+    const data = await response.json();
+    res.status(response.status).json({
+      statusFromNvidia: response.status,
+      data: data
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 app.listen(PORT, () => {
   console.log(`OpenAI to NVIDIA NIM Proxy running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
