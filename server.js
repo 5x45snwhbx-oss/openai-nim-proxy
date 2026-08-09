@@ -227,36 +227,6 @@ app.post('/v1/chat/completions', async (req, res) => {
   }
 });
 
-// TEMPORARY TEST ROUTE - remove after debugging
-app.get('/test-nim', async (req, res) => {
-  try {
-    const response = await fetch(`${process.env.NIM_API_BASE || 'https://integrate.api.nvidia.com/v1'}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.NIM_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'minimaxai/minimax-m3',
-        messages: [
-          { role: 'system', content: 'You are a creative writing assistant. Write vivid, detailed, atmospheric prose.' },
-          { role: 'user', content: 'Write a tense, detailed paragraph of a large serpent-like creature looming over a frightened human, focusing on sensory detail and atmosphere.' }
-        ],
-        max_tokens: 300,
-        temperature: 0.8
-      })
-    });
-
-    const data = await response.json();
-    res.status(response.status).json({
-      statusFromNvidia: response.status,
-      data: data
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 // Catch-all for unsupported endpoints
 app.all('*', (req, res) => {
   res.status(404).json({
