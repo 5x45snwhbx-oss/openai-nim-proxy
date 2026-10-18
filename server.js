@@ -24,7 +24,7 @@ const ENABLE_THINKING_MODE = false; // Set to true to enable chat_template_kwarg
 const MODEL_MAPPING = {
   'mistralai': 'mistralai/mistral-large-3-675b-instruct-2512',
   'deepseek-v4-flash': 'deepseek-ai/deepseek-v4-flash-0731',
-  'kimi-k3': 'moonshotai/kimi-k3',
+  'glm-5.3-flash': 'z-ai/glm-5.3-flash',
   'claude-3-sonnet': 'openai/gpt-oss-20b',
 };
 
