@@ -25,7 +25,7 @@ const MODEL_MAPPING = {
   'mistralai': 'mistralai/mistral-large-3-675b-instruct-2512',
   'deepseek-v4-flash': 'deepseek-ai/deepseek-v4-flash-0731',
   'glm-5.3-flash': 'z-ai/glm-5.3-flash',
-  'claude-3-sonnet': 'openai/gpt-oss-20b',
+  'step-5-preview': 'stepfun-ai/step-5-preview',
 };
 
 // Health check endpoint
